@@ -1,0 +1,12 @@
+void setup()
+{
+Serial.begin(9600);
+}
+void loop()
+{
+float reading = analogRead(A0);
+float voltage = (reading / 1024) * 5;
+float temp = (voltage / 0.01);
+Serial.print(" The temperature is : ");
+Serial.println(temp);
+}
