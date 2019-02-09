@@ -1,0 +1,14 @@
+float readSensor;
+float voltage;
+void setup()
+{
+Serial.begin(9600);
+}
+void loop()
+{
+readSensor = analogRead(0);
+Serial.print(" Rain Sensor Reading is: ");
+Serial.println(readSensor);
+Serial.println();
+delay(300);
+}
