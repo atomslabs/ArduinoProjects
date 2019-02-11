@@ -1,0 +1,28 @@
+int sensorValue = 0;
+int laser = 12;
+int buzzer = 8;
+int led = 9;
+void setup()
+{
+pinMode(laser, OUTPUT);
+pinMode(buzzer, OUTPUT);
+pinMode(led, OUTPUT);
+Serial.begin(9600);
+}
+
+void loop()
+{
+sensorValue = analogRead(0);
+Serial.println(sensorValue);
+if (sensorValue < 700)
+{
+digitalWrite(led, HIGH);
+digitalWrite(buzzer, HIGH);
+}
+else
+{
+digitalWrite(led, LOW);
+digitalWrite(buzzer, LOW);
+}
+delay(500);
+}
