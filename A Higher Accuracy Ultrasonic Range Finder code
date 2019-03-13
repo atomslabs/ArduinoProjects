@@ -1,0 +1,49 @@
+#include <math.h>
+#define trigPin 10
+#define echoPin 13
+
+double Thermistor(int RawADC) {
+ double Temp;
+ Temp = log(10000.0*((1024.0/RawADC-1))); 
+ Temp = 1 / (0.001129148 + (0.000234125 + (0.0000000876741 * Temp * Temp ))* Temp );
+ Temp = Temp - 273.15;          
+ return Temp;
+}
+
+void setup() {
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+
+void loop() {
+  int val;                
+  double temp;            
+  val=analogRead(0);      
+  temp=Thermistor(val);
+
+  float duration, distance;
+  float spdSnd;
+  digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2);
+ 
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  duration = pulseIn(echoPin, HIGH);
+  spdSnd = 331.4 + (0.606 * temp) + 0.62;
+  distance = (duration / 2) * (spdSnd / 10000);
+  
+  if (distance >= 400 || distance <= 2){
+    Serial.print("Distance = ");
+    Serial.println("Out of range");
+  }
+  else {
+    Serial.print("Distance = ");
+    Serial.print(distance);
+    Serial.println(" cm");
+    delay(500);
+  }
+  delay(500);
+}
